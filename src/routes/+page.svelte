@@ -15,6 +15,7 @@
             { size: 4, liquid: [ ] },
         ],
     }
+    $: console.log(getMoves(board));
     let input: number[] = [];
     
     let visualBoard: VisualBoard = { vials: [] };
@@ -28,7 +29,6 @@
                 to: input[1],
             };
             let moves: Move[] = getMoves(board);
-            console.log(moves);
             if (moves.some(m => m.from === move.from && m.to === move.to)) {
                 board = applyMove(board, move);
                 if (gameWon(board)) {

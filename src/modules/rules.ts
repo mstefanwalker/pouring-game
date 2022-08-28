@@ -12,7 +12,11 @@ export type Vial = {
     liquid: Liquid[];
 }
 
-export type Liquid = 'red' | 'blue' | 'green' | 'yellow' | 'purple' | 'orange' | 'white' | 'black';
+export type Liquid = string;
+
+export function gameWon(board: Board): boolean {
+    return getPartialEmptyVials(board).length === 0;
+}
 
 export function applyMove(board: Board, move: Move): Board {
     let vials = board.vials;

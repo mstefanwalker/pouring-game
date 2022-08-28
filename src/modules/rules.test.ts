@@ -1,5 +1,5 @@
 import type { Board } from './rules';
-import { getMoves, applyMove } from './rules';
+import { getMoves, applyMove, gameWon } from './rules';
 
 test('expect to pour from a full vial into an empty vial', () => {
     let board: Board = {
@@ -46,7 +46,7 @@ test('pour from a full vial into an empty vial', () => {
     });
 });
 
-test('pour from a full vial of size 2 into an empty vial of size 2', () => {
+test('pour from a full vial with two liquid into an empty vial', () => {
     let board: Board = {
         vials: [
             { size: 2, liquid: [ 0, 0 ] },
@@ -61,7 +61,7 @@ test('pour from a full vial of size 2 into an empty vial of size 2', () => {
     });
 });
 
-test('pour from a full heterogeneous vial of size 3 into an empty vial of size 3', () => {
+test('pour from a full heterogeneous vial into an empty vial', () => {
     let board: Board = {
         vials: [
             { size: 3, liquid: [ 1, 0, 0 ] },
@@ -90,3 +90,23 @@ test('restore spilled liquid when overflowing a vial', () => {
         ],
     });
 });
+
+test('win when no two liquids share a vial', () => {
+    let board: Board = {
+        vials: [
+            { size: 2, liquid: [ 0 ] },
+            { size: 2, liquid: [ ] },
+        ],
+    }
+    expect(gameWon(board)).toBe(true);
+});
+
+test('don\'t win if one type of liquid is split between multiple vials', () => {
+    let board: Board = {
+        vials: [
+            { size: 2, liquid: [ 0 ] },
+            { size: 2, liquid: [ 0 ] },
+        ],
+    }
+    expect(gameWon(board)).toBe(false);
+})

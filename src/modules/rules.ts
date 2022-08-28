@@ -15,7 +15,24 @@ export type Vial = {
 export type Liquid = number;
 
 export function gameWon(board: Board): boolean {
-    return getPartialEmptyVials(board).length === 0;
+    let vialByLiquid: {[liquid: number]: Vial} = {};
+    for (let vial of board.vials) {
+        if (vial.liquid.length === 0) {
+            continue;
+        }
+        let bottomLiquid = vial.liquid[0];
+        if (vialByLiquid[bottomLiquid] === undefined) {
+            vialByLiquid[bottomLiquid] = vial;
+        } else {
+            return false;
+        }
+        for (let i = 1; i < vial.liquid.length; i++) {
+            if (vial.liquid[i] !== bottomLiquid) {
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
 export function applyMove(board: Board, move: Move): Board {

@@ -6,11 +6,11 @@
 
     let board: Board = {
         vials: [
-            { size: 4, liquid: [ 'pink', 'red', 'blue', 'pink' ] },
-            { size: 4, liquid: [ 'red', 'green', 'green', 'orange' ] },
-            { size: 4, liquid: [ 'red', 'orange', 'orange', 'pink' ] },
-            { size: 4, liquid: [ 'pink', 'red', 'green', 'blue' ] },
-            { size: 4, liquid: [ 'green', 'orange', 'blue', 'blue' ] },
+            { size: 4, liquid: [ 'darkmagenta', 'darkorchid', 'slateblue', 'darkmagenta' ] },
+            { size: 4, liquid: [ 'darkorchid', 'indigo', 'indigo', 'mediumvioletred' ] },
+            { size: 4, liquid: [ 'darkorchid', 'mediumvioletred', 'mediumvioletred', 'darkmagenta' ] },
+            { size: 4, liquid: [ 'darkmagenta', 'darkorchid', 'indigo', 'slateblue' ] },
+            { size: 4, liquid: [ 'indigo', 'mediumvioletred', 'slateblue', 'slateblue' ] },
             { size: 4, liquid: [ ] },
             { size: 4, liquid: [ ] },
         ],

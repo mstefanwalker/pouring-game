@@ -75,3 +75,18 @@ test('pour from a full heterogeneous vial of size 3 into an empty vial of size 3
         ],
     });
 });
+
+test('restore spilled liquid when overflowing a vial', () => {
+    let board: Board = {
+        vials: [
+            { size: 2, liquid: [ 'red', 'red' ] },
+            { size: 2, liquid: [ 'red' ] },
+        ],
+    }
+    expect(applyMove(board, {from: 0, to: 1})).toEqual({
+        vials: [
+            { size: 2, liquid: [ 'red' ] },
+            { size: 2, liquid: [ 'red', 'red' ] },
+        ],
+    });
+});

@@ -24,6 +24,10 @@ export function applyMove(board: Board, move: Move): Board {
     let to: Vial = vials[move.to];
     let movingLiquid: Liquid[] = popMatchingLiquid(from);
     to.liquid = to.liquid.concat(movingLiquid);
+    while (to.liquid.length > to.size) {
+        let spilledLiquid: Liquid = to.liquid.pop() as Liquid;
+        from.liquid.push(spilledLiquid);
+    }
     return {vials: vials};
 }
 

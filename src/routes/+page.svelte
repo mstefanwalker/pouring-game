@@ -4,13 +4,21 @@
     import type { VisualBoard } from '../modules/boardVisualizer';
     import { visualizeBoard } from '../modules/boardVisualizer';
 
+    let colors = [
+        'darkmagenta',
+        'darkorchid',
+        'slateblue',
+        'indigo',
+        'mediumvioletred'
+    ];
+
     let board: Board = {
         vials: [
-            { size: 4, liquid: [ 'darkmagenta', 'darkorchid', 'slateblue', 'darkmagenta' ] },
-            { size: 4, liquid: [ 'darkorchid', 'indigo', 'indigo', 'mediumvioletred' ] },
-            { size: 4, liquid: [ 'darkorchid', 'mediumvioletred', 'mediumvioletred', 'darkmagenta' ] },
-            { size: 4, liquid: [ 'darkmagenta', 'darkorchid', 'indigo', 'slateblue' ] },
-            { size: 4, liquid: [ 'indigo', 'mediumvioletred', 'slateblue', 'slateblue' ] },
+            { size: 4, liquid: [ 0, 1, 2, 0 ] },
+            { size: 4, liquid: [ 1, 3, 3, 4 ] },
+            { size: 4, liquid: [ 1, 4, 4, 0 ] },
+            { size: 4, liquid: [ 0, 1, 3, 2 ] },
+            { size: 4, liquid: [ 3, 4, 2, 2 ] },
             { size: 4, liquid: [ ] },
             { size: 4, liquid: [ ] },
         ],
@@ -49,7 +57,7 @@
         <span class='vial'>
             {#each vial.contents as content}
                 {#if content.type == 'liquid'}
-                    <div class='liquid' style="--color: {content.liquid}">
+                    <div class='liquid' style="--color: {colors[content.liquid]}">
                         
                     </div>
                 {:else if content.type == 'air'}

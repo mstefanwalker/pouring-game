@@ -4,7 +4,7 @@ import { getMoves, applyMove } from './rules';
 test('expect to pour from a full vial into an empty vial', () => {
     let board: Board = {
         vials: [
-            { size: 1, liquid: [ 'red' ] },
+            { size: 1, liquid: [ 0 ] },
             { size: 1, liquid: [ ] },
         ],
     }
@@ -14,8 +14,8 @@ test('expect to pour from a full vial into an empty vial', () => {
 test('expect to pour from a full vial into a matching partially empty vial', () => {
     let board: Board = {
         vials: [
-            { size: 2, liquid: [ 'red', 'red' ] },
-            { size: 2, liquid: [ 'red' ] },
+            { size: 2, liquid: [ 0, 0 ] },
+            { size: 2, liquid: [ 0 ] },
         ],
     }
     expect(getMoves(board)).toEqual([{from: 0, to: 1}]);
@@ -24,8 +24,8 @@ test('expect to pour from a full vial into a matching partially empty vial', () 
 test('expect not to pour from a full vial into a mismatched partially empty vial', () => {
     let board: Board = {
         vials: [
-            { size: 2, liquid: [ 'red', 'red' ] },
-            { size: 2, liquid: [ 'blue' ] },
+            { size: 2, liquid: [ 0, 0 ] },
+            { size: 2, liquid: [ 1 ] },
         ],
     }
     expect(getMoves(board)).toEqual([]);
@@ -34,14 +34,14 @@ test('expect not to pour from a full vial into a mismatched partially empty vial
 test('pour from a full vial into an empty vial', () => {
     let board: Board = {
         vials: [
-            { size: 1, liquid: [ 'red' ] },
+            { size: 1, liquid: [ 0 ] },
             { size: 1, liquid: [ ] },
         ],
     }
     expect(applyMove(board, {from: 0, to: 1})).toEqual({
         vials: [
             { size: 1, liquid: [ ] },
-            { size: 1, liquid: [ 'red' ] },
+            { size: 1, liquid: [ 0 ] },
         ],
     });
 });
@@ -49,14 +49,14 @@ test('pour from a full vial into an empty vial', () => {
 test('pour from a full vial of size 2 into an empty vial of size 2', () => {
     let board: Board = {
         vials: [
-            { size: 2, liquid: [ 'red', 'red' ] },
+            { size: 2, liquid: [ 0, 0 ] },
             { size: 2, liquid: [ ] },
         ],
     }
     expect(applyMove(board, {from: 0, to: 1})).toEqual({
         vials: [
             { size: 2, liquid: [ ] },
-            { size: 2, liquid: [ 'red', 'red' ] },
+            { size: 2, liquid: [ 0, 0 ] },
         ],
     });
 });
@@ -64,14 +64,14 @@ test('pour from a full vial of size 2 into an empty vial of size 2', () => {
 test('pour from a full heterogeneous vial of size 3 into an empty vial of size 3', () => {
     let board: Board = {
         vials: [
-            { size: 3, liquid: [ 'blue', 'red', 'red' ] },
+            { size: 3, liquid: [ 1, 0, 0 ] },
             { size: 3, liquid: [ ] },
         ],
     }
     expect(applyMove(board, {from: 0, to: 1})).toEqual({
         vials: [
-            { size: 3, liquid: [ 'blue' ] },
-            { size: 3, liquid: [ 'red', 'red' ] },
+            { size: 3, liquid: [ 1 ] },
+            { size: 3, liquid: [ 0, 0 ] },
         ],
     });
 });
@@ -79,14 +79,14 @@ test('pour from a full heterogeneous vial of size 3 into an empty vial of size 3
 test('restore spilled liquid when overflowing a vial', () => {
     let board: Board = {
         vials: [
-            { size: 2, liquid: [ 'red', 'red' ] },
-            { size: 2, liquid: [ 'red' ] },
+            { size: 2, liquid: [ 0, 0 ] },
+            { size: 2, liquid: [ 0 ] },
         ],
     }
     expect(applyMove(board, {from: 0, to: 1})).toEqual({
         vials: [
-            { size: 2, liquid: [ 'red' ] },
-            { size: 2, liquid: [ 'red', 'red' ] },
+            { size: 2, liquid: [ 0 ] },
+            { size: 2, liquid: [ 0, 0 ] },
         ],
     });
 });

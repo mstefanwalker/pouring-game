@@ -12,7 +12,7 @@ export type Vial = {
     liquid: Liquid[];
 }
 
-export type Liquid = string;
+export type Liquid = number;
 
 export function gameWon(board: Board): boolean {
     return getPartialEmptyVials(board).length === 0;

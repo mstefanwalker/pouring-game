@@ -40,7 +40,7 @@
             if (moves.some(m => m.from === move.from && m.to === move.to)) {
                 board = applyMove(board, move);
                 if (gameWon(board)) {
-                    alert('you win!!!');
+                    setTimeout(() => alert('you win!!!'), 1);
                 }
             } else {
                 alert(`can't move from ${move.from} to ${move.to}`);

@@ -27,10 +27,12 @@ function popMatchingLiquid(vial: Vial): Liquid[] {
     let liquidToMatch = vial.liquid.pop() as Liquid;
     let poppedLiquid = [liquidToMatch];
     for (let i = vial.liquid.length - 1; i >= 0; i--) {
-        if (vial.liquid[i] !== liquidToMatch) {
+        if (vial.liquid[i] === liquidToMatch) {
+            poppedLiquid.push(vial.liquid.pop() as Liquid);
+        } else {
             return poppedLiquid;
         }
-        poppedLiquid.push(vial.liquid.pop() as Liquid);
+        
     }
     return poppedLiquid;
 }

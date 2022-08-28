@@ -54,10 +54,10 @@
 
 <div class='game'>
     {#each visualBoard.vials as vial, index}
-        <span class='vial'>
+        <span class='vial' style='--size: {vial.size}'>
             {#each vial.contents as content}
                 {#if content.type == 'liquid'}
-                    <div class='liquid' style="--color: {colors[content.liquid]}">
+                    <div class='liquid' style='--color: {colors[content.liquid]}'>
                         
                     </div>
                 {:else if content.type == 'air'}
@@ -84,8 +84,8 @@
         margin-bottom: 75px;
         display: inline-block;
         width: 50px;
-        height: 200px;
-        background-color: lightgrey;
+        height: var(--size) * 50px;
+        background-color: rgb(229, 229, 229);
     }
     .liquid, .air {
         width: 50px;

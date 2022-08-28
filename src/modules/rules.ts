@@ -14,6 +14,27 @@ export type Vial = {
 
 export type Liquid = 'red' | 'blue' | 'green' | 'yellow' | 'purple' | 'orange' | 'white' | 'black';
 
+export function applyMove(board: Board, move: Move): Board {
+    let vials = board.vials;
+    let from: Vial = vials[move.from];
+    let to: Vial = vials[move.to];
+    let movingLiquid: Liquid[] = popMatchingLiquid(from);
+    to.liquid = to.liquid.concat(movingLiquid);
+    return {vials: vials};
+}
+
+function popMatchingLiquid(vial: Vial): Liquid[] {
+    let liquidToMatch = vial.liquid.pop() as Liquid;
+    let poppedLiquid = [liquidToMatch];
+    for (let i = vial.liquid.length - 1; i >= 0; i--) {
+        if (vial.liquid[i] !== liquidToMatch) {
+            return poppedLiquid;
+        }
+        poppedLiquid.push(vial.liquid.pop() as Liquid);
+    }
+    return poppedLiquid;
+}
+
 export function returnMoves(board: Board): Move[] {
     let moves: Move[] = [];
     moves = [...movesToEmptyVials(board), ...moves];
@@ -21,7 +42,6 @@ export function returnMoves(board: Board): Move[] {
     return moves;
 }
 
-// moves to partial empty vials ================================================
 function movesToPartialEmptyVials(board: Board): Move[] {
     let vials = board.vials;
     let partialEmptyMoves: Move[] = [];
@@ -47,7 +67,6 @@ function getTopLiquid(vial: Vial): Liquid {
     return vial.liquid[vial.liquid.length - 1];
 }
 
-// moves to empty vials ========================================================
 function movesToEmptyVials(board: Board): Move[] {
     let nonEmptyVials: number[] = getNonEmptyVials(board);
     let emptyVials: number[] = getEmptyVials(board);

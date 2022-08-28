@@ -1,5 +1,5 @@
 import type { Board } from './rules';
-import { returnMoves, applyMove } from './rules';
+import { getMoves, applyMove } from './rules';
 
 test('expect to pour from a full vial into an empty vial', () => {
     let board: Board = {
@@ -8,7 +8,7 @@ test('expect to pour from a full vial into an empty vial', () => {
             { size: 1, liquid: [ ] },
         ],
     }
-    expect(returnMoves(board)).toEqual([{from: 0, to: 1}]);
+    expect(getMoves(board)).toEqual([{from: 0, to: 1}]);
 });
 
 test('expect to pour from a full vial into a matching partially empty vial', () => {
@@ -18,7 +18,7 @@ test('expect to pour from a full vial into a matching partially empty vial', () 
             { size: 2, liquid: [ 'red' ] },
         ],
     }
-    expect(returnMoves(board)).toEqual([{from: 0, to: 1}]);
+    expect(getMoves(board)).toEqual([{from: 0, to: 1}]);
 });
 
 test('expect not to pour from a full vial into a mismatched partially empty vial', () => {
@@ -28,7 +28,7 @@ test('expect not to pour from a full vial into a mismatched partially empty vial
             { size: 2, liquid: [ 'blue' ] },
         ],
     }
-    expect(returnMoves(board)).toEqual([]);
+    expect(getMoves(board)).toEqual([]);
 });
 
 test('pour from a full vial into an empty vial', () => {

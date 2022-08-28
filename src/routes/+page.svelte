@@ -1,6 +1,6 @@
 <script lang='ts'>
     import type { Board, Move } from '../modules/rules';
-    import { returnMoves, applyMove, gameWon } from '../modules/rules';
+    import { getMoves, applyMove, gameWon } from '../modules/rules';
     import type { VisualBoard } from '../modules/boardVisualizer';
     import { visualizeBoard } from '../modules/boardVisualizer';
 
@@ -27,7 +27,7 @@
                 from: input[0],
                 to: input[1],
             };
-            let moves: Move[] = returnMoves(board);
+            let moves: Move[] = getMoves(board);
             console.log(moves);
             if (moves.some(m => m.from === move.from && m.to === move.to)) {
                 board = applyMove(board, move);

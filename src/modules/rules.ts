@@ -45,7 +45,7 @@ function popMatchingLiquid(vial: Vial): Liquid[] {
     return poppedLiquid;
 }
 
-export function returnMoves(board: Board): Move[] {
+export function getMoves(board: Board): Move[] {
     let moves: Move[] = [];
     moves = [...movesToEmptyVials(board), ...moves];
     moves = [...movesToPartialEmptyVials(board), ...moves];

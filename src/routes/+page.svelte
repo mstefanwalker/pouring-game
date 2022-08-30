@@ -5,11 +5,11 @@
     import { visualizeBoard } from '../modules/boardVisualizer';
 
     let colors = [
-        'darkmagenta',
-        'darkorchid',
-        'slateblue',
-        'indigo',
-        'mediumvioletred'
+        'SkyBlue',
+        'darkturquoise',
+        'RebeccaPurple',
+        'MediumSlateBlue',
+        'teal',
     ];
 
     let board: Board = {

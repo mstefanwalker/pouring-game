@@ -44,6 +44,9 @@
                 if (game.gameWon(board)) {
                     setTimeout(() => alert('you win!!!'), 10);
                 }
+                if (game.getMoves(board).length === 0) {
+                    setTimeout(() => alert('no more moves :('), 10);
+                }
             } else {
                 alert(`can't move from ${move.from} to ${move.to}`);
             }

@@ -18,39 +18,54 @@ export type Node = {
 export type Moves = Map<Move, Node>
 
 export type Statistics = {
-    shortestSolves: Sequence[],
-    deadEnds: number,
+    depthLimit: DepthLimit | NoLimit,
+    shortestSolve: number,
+    winningNodes: number,
+    losingNodes: number
 }
 
-export type Sequence = Move[];
+export type DepthLimit = {
+    type: 'depthLimit',
+    depth: number,
+}
+
+export type NoLimit = {
+    type: 'noLimit',
+}
 
 export function evaluateBoard(board: Board): BoardEvaluation {
-    return { 
-        stateGraph: {
-            start: buildTreeBFS(board),
-        },
-        statistics: {
-            shortestSolves: [],
-            deadEnds: 0,
-        },
-    };
+    return evaluateBoardBFS(board, {type: 'depthLimit', depth: 4});
 }
 
-export function buildTreeBFS(board: Board): Node {
-    let currentNodes: Queue<Node> = new Queue();
+function evaluateBoardBFS(board: Board, depthLimit: DepthLimit | NoLimit): BoardEvaluation {
     let startingNode: Node = { board: board, moves: new Map() };
+    let stateGraph = {
+        start: startingNode,
+    }
+    let statistics = {
+        depthLimit: depthLimit,
+        shortestSolve: 0,
+        winningNodes: 0,
+        losingNodes: 0
+    }
+    let currentNodes: Queue<Node> = new Queue();
     currentNodes.enqueue(startingNode);
     let nextNodes: Queue<Node> = new Queue();
     let visited: Board[] = [];
     let depth = 0;
+    let solves: number[] = [];
     while(!currentNodes.isEmpty()) {
         nextNodes = new Queue();
-        if (depth >= 4) {
+        if (depthLimit.type === 'depthLimit' && depth >= depthLimit.depth) {
             break;
         }
         while (!currentNodes.isEmpty()) {
             let node = currentNodes.dequeue() as Node;
             let moves = game.getMoves(node.board);
+            if (moves.length == 0) {
+                statistics.losingNodes++;
+                continue;
+            }
             for (let move of moves) {
                 let nextBoard = game.applyMove(node.board, move);
                 if (visited.some(b => calculate.boardTreeEquivalent(b, nextBoard))) {
@@ -64,7 +79,10 @@ export function buildTreeBFS(board: Board): Node {
                 };
                 node.moves.set(move, nextNode);
                 let won = game.gameWon(nextBoard);
-                if (!won) {
+                if (won) {
+                    statistics.winningNodes++;
+                    solves.push(depth + 1);
+                } else {
                     nextNodes.enqueue(nextNode);
                 }
             }
@@ -72,7 +90,11 @@ export function buildTreeBFS(board: Board): Node {
         currentNodes = nextNodes;
         depth++;
     }
-    return startingNode;
+    statistics.shortestSolve = Math.min(...solves);
+    return {
+        stateGraph: stateGraph,
+        statistics: statistics,
+    }
 }
 
 class Queue<E> {

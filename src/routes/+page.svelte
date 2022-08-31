@@ -1,15 +1,16 @@
 <script lang='ts'>
     import type { Board, Move } from '../modules/rules';
-    import { getMoves, applyMove, gameWon } from '../modules/rules';
-    import type { VisualBoard } from '../modules/boardVisualizer';
-    import { visualizeBoard } from '../modules/boardVisualizer';
+    import { game, calculate } from '../modules/rules';
+    import type { VisualBoard } from '../modules/visualizeBoard';
+    import { visualizeBoard } from '../modules/visualizeBoard';
+    import { evaluateBoard } from '../modules/evaluateBoard';
 
     let colors = [
-        'SkyBlue',
-        'darkturquoise',
-        'RebeccaPurple',
-        'MediumSlateBlue',
-        'teal',
+        '#7440f3',
+        '#a799ff',
+        '#00538f',
+        '#00cab2',
+        '#0390b0',
     ];
 
     let board: Board = {
@@ -23,7 +24,8 @@
             { size: 4, liquid: [ ] },
         ],
     }
-    $: console.log(getMoves(board));
+
+    $: console.log(evaluateBoard(board));
     let input: number[] = [];
     
     let visualBoard: VisualBoard = { vials: [] };
@@ -36,11 +38,11 @@
                 from: input[0],
                 to: input[1],
             };
-            let moves: Move[] = getMoves(board);
-            if (moves.some(m => m.from === move.from && m.to === move.to)) {
-                board = applyMove(board, move);
-                if (gameWon(board)) {
-                    setTimeout(() => alert('you win!!!'), 1);
+            let moves: Move[] = game.getMoves(board);
+            if (moves.some(m => calculate.moveEqual(m, move))) {
+                board = game.applyMove(board, move);
+                if (game.gameWon(board)) {
+                    setTimeout(() => alert('you win!!!'), 10);
                 }
             } else {
                 alert(`can't move from ${move.from} to ${move.to}`);
